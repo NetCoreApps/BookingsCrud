@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ServiceStack" Version="5.*" />
+    <PackageReference Include="ServiceStack.OrmLite.Sqlite" Version="5.9.3" />
+    <PackageReference Include="ServiceStack.Server" Version="5.9.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Acme.ServiceInterface\Acme.ServiceInterface.csproj" />
+    <ProjectReference Include="..\Acme.ServiceModel\Acme.ServiceModel.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,74 @@
+<html>
+<head>
+    <title>Acme</title>
+    <style>
+        body { padding: 3em; }
+        body, input[type=text] { font: 32px/36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif }
+        input { padding:.25em .5em; margin-right:.5em; }
+        a { color: #007bff }
+        #result { display:inline-block;color:#28a745; }
+        pre { background: #f1f1f1; padding: 1em; }
+    </style>
+</head>
+<body>
+    
+    <h2><a href="/json/metadata?op=Hello">Hello</a> API</h2>
+    <input type="text" id="txtName" onkeyup="callHello(this.value)">
+    <div id="result"></div>
+
+    <h4>Example Code</h4>
+    <div style="font-size:20px;line-height:26px">
+
+        <pre>&lt;script src="/js/servicestack-client.js"&gt;&lt;/script&gt;</pre>
+
+        <h3>JavaScript</h3>
+        <pre>Object.assign(window, window['@servicestack/client']) //import
+
+var client = new JsonServiceClient()
+client.get(new Hello({ name: name }))
+    .then(function(r) {
+        console.log(r.result)
+    })
+</pre>
+
+    <h3>TypeScript</h3>
+    <pre>$ npm install @servicestack/client</pre>
+    <pre>import { JsonServiceClient } from '@servicestack/client'
+
+let client = new JsonServiceClient()
+let response = await client.get(new Hello({ name }))
+</pre>
+
+        <p>
+            Generate Typed DTOs using 
+            <a href="https://docs.servicestack.net/typescript-add-servicestack-reference">Add ServiceStack Reference</a> 
+        </p>
+    </div>
+            
+    <script src="/js/servicestack-client.js"></script>
+    <script>
+        Object.assign(window, window['@servicestack/client']); //import into global namespace
+
+        // generate typed dtos with https://docs.servicestack.net/typescript-add-servicestack-reference
+        var Hello = /** @class */ (function () {
+            function Hello(init) { Object.assign(this, init); }
+            Hello.prototype.createResponse = function () { return new HelloResponse(); };
+            Hello.prototype.getTypeName = function () { return 'Hello'; };
+            return Hello;
+        }());
+        var HelloResponse = /** @class */ (function () {
+            function HelloResponse(init) { Object.assign(this, init); }
+            return HelloResponse;
+        }());
+
+        var client = new JsonServiceClient();
+        function callHello(val) {
+            client.get(new Hello({ name: val }))
+                .then(function(r) {
+                    document.getElementById('result').innerHTML = r.result;
+                });
+        }
+    </script>
+
+</body>
+</html>
