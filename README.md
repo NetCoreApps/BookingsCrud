@@ -12,7 +12,7 @@ adhoc queries & export to Excel by just defining code-first high-performance Aut
 The quickest way to 
 
     $ app download NetCoreApps/BookingsCrud
-    $ cd Acme
+    $ cd BookingsCrud\Acme
     $ dotnet run
 
 ## Creating new Empty Web Project
