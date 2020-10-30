@@ -3,7 +3,9 @@
 Leverage [AutoQuery CRUD](https://docs.servicestack.net/autoquery-crud), ServiceStack [Studio](https://docs.servicestack.net/studio) with User Admin module to create a multi-user ASP.NET Core Booking System from scratch within minutes with full Audit History, fine-grained permissions, declarative validation, run
 adhoc queries & export to Excel by just defining code-first high-performance AutoQuery CRUD Typed APIs - ServiceStack does the rest!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/XpHAaCTV7jE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+> YouTube: [youtu.be/XpHAaCTV7jE](https://youtu.be/XpHAaCTV7jE)
+
+[![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/studio/bookings-crud-screenshot.png)](https://youtu.be/XpHAaCTV7jE)
 
 ## Download & Run
 
