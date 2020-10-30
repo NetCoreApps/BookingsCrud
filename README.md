@@ -72,7 +72,7 @@ class where:
   - `Behavior.AuditQuery` - adds an [Ensure AutoFilter](https://docs.servicestack.net/autoquery-crud#autofilter) to filter out any deleted records
   - `Behavior.AuditCreate` - populates the `Created*` and `Modified*` properties with the Authenticated user info
   - `Behavior.AuditModify` - populates the `Modified*` properties with the Authenticated user info
-  - `Behavior.AuditSoftDelete` -changes the behavior of the default **Real Delete** to a **Soft Delete** by  
+  - `Behavior.AuditSoftDelete` - changes the behavior of the default **Real Delete** to a **Soft Delete** by  
    populating the `Deleted*` properties
 
 ```csharp
