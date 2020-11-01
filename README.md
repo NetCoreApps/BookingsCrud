@@ -9,7 +9,7 @@ adhoc queries & export to Excel by just defining code-first high-performance Aut
 
 ## Download & Run
 
-The quickest way to 
+The quickest way to run this Booking CRUD Example is to download & run it:
 
     $ app download NetCoreApps/BookingsCrud
     $ cd BookingsCrud\Acme
