@@ -163,7 +163,7 @@ With your AutoQuery APIs created, you can run your App and use [ServiceStack Stu
 
 Install the [app dotnet tool](/netcore-windows-desktop) then launch with:
 
-#### [app://studio](app://studio)
+### [app://studio](app://studio)
 
 > YouTube: [youtu.be/2FFRLxs7orU](https://youtu.be/2FFRLxs7orU)
 
