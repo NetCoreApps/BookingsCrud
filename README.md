@@ -11,7 +11,7 @@ adhoc queries & export to Excel by just defining code-first high-performance Aut
 
 The quickest way to run this Booking CRUD Example is to download & run it:
 
-    $ app download NetCoreApps/BookingsCrud
+    $ app download NetCoreApps/BookingsCrud -out BookingsCrud
     $ cd BookingsCrud\Acme
     $ dotnet run
 
