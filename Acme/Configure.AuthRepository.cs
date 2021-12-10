@@ -1,20 +1,18 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.DependencyInjection;
 using ServiceStack;
 using ServiceStack.Web;
 using ServiceStack.Data;
 using ServiceStack.Auth;
 using ServiceStack.Configuration;
-using ServiceStack.OrmLite;
+
+[assembly: HostingStartup(typeof(Acme.ConfigureAuthRepository))]
 
 namespace Acme
 {
     // Custom User Table with extended Metadata properties
     public class AppUser : UserAuth
     {
-        public string ProfileUrl { get; set; }
-        public string LastLoginIp { get; set; }
+        public string? ProfileUrl { get; set; }
+        public string? LastLoginIp { get; set; }
         public DateTime? LastLoginDate { get; set; }
     }
 
@@ -35,28 +33,19 @@ namespace Acme
         }
     }
 
-    public class ConfigureAuthRepository : IConfigureAppHost, IConfigureServices, IPreInitPlugin
+    public class ConfigureAuthRepository : IHostingStartup
     {
-        public void Configure(IServiceCollection services)
-        {
-            services.AddSingleton<IAuthRepository>(c =>
+        public void Configure(IWebHostBuilder builder) => builder
+            .ConfigureServices(services => services.AddSingleton<IAuthRepository>(c =>
                 new OrmLiteAuthRepository<AppUser, UserAuthDetails>(c.Resolve<IDbConnectionFactory>()) {
                     UseDistinctRoleTables = true
-                });            
-        }
-
-        public void Configure(IAppHost appHost)
-        {
-            var authRepo = appHost.Resolve<IAuthRepository>();
-            authRepo.InitSchema();
-
-            CreateUser(authRepo, "admin@email.com", "Admin User", "p@55wOrd", roles:new[]{ RoleNames.Admin });
-        }
-
-        public void BeforePluginsLoaded(IAppHost appHost)
-        {
-            appHost.AssertPlugin<AuthFeature>().AuthEvents.Add(new AppUserAuthEvents());
-        }
+                }))
+            .ConfigureAppHost(appHost => {
+                var authRepo = appHost.Resolve<IAuthRepository>();
+                authRepo.InitSchema();
+                // CreateUser(authRepo, "admin@email.com", "Admin User", "p@55wOrd", roles:new[]{ RoleNames.Admin });
+            }, afterConfigure: appHost => 
+                appHost.AssertPlugin<AuthFeature>().AuthEvents.Add(new AppUserAuthEvents()));
 
         // Add initial Users to the configured Auth Repository
         public void CreateUser(IAuthRepository authRepo, string email, string name, string password, string[] roles)
