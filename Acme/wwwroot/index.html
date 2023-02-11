@@ -1,74 +1,139 @@
 <html>
 <head>
-    <title>Acme</title>
-    <style>
-        body { padding: 3em; }
-        body, input[type=text] { font: 32px/36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif }
-        input { padding:.25em .5em; margin-right:.5em; }
-        a { color: #007bff }
-        #result { display:inline-block;color:#28a745; }
-        pre { background: #f1f1f1; padding: 1em; }
-    </style>
+<title>My App</title>
+<style>
+    body { padding: 1em 1em 5em 1em; }
+    body, input[type=text] { font: 20px/28px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif }
+    input { padding:.25em .5em; margin-right:.5em; }
+    a { color:#007bff; text-decoration:none }
+    a:hover { text-decoration:underline }
+    #result { display:inline-block; color:#28a745; font-size:28px }
+    pre { border-radius:10px; overflow:hidden }
+    h2, h3, strong { font-weight:500 }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/atom-one-dark.min.css">
+<script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script><!--safari polyfill-->
+<script type="importmap">
+{
+    "imports": {
+        "@servicestack/client": "https://unpkg.com/@servicestack/client@2/dist/servicestack-client.min.mjs"
+    }
+}
+</script>
 </head>
 <body>
+
+<h2><a href="/ui/Hello">Hello</a> API</h2>
+<input type="text" id="txtName">
+<div id="result"></div>
+
+<script type="module">
+import { JsonApiClient, $1, on } from '@servicestack/client'
+import { Hello } from '/types/mjs'
+
+const client = JsonApiClient.create()
+on('#txtName', {
+    /** @param {Event} el */
+    async keyup(el) {
+        const api = await client.api(new Hello({ name:el.target.value }))
+        $1('#result').innerHTML = api.response.result
+    }
+})
+
+$1('#txtName').value = 'World'
+$1('#txtName').dispatchEvent(new KeyboardEvent('keyup'))
+</script>
+
+<div id="content" style="max-width:105ch"></div>
+
+<template id="docs">
     
-    <h2><a href="/json/metadata?op=Hello">Hello</a> API</h2>
-    <input type="text" id="txtName" onkeyup="callHello(this.value)">
-    <div id="result"></div>
+## View in API Explorer
 
-    <h4>Example Code</h4>
-    <div style="font-size:20px;line-height:26px">
+- [Call API](/ui/Hello)
+- [View API Details](/ui/Hello?tab=details)
+- [Browse API source code in different langauges](/ui/Hello?tab=code)
 
-        <pre>&lt;script src="/js/servicestack-client.js"&gt;&lt;/script&gt;</pre>
+## Manage Bookings in [Locode](/locode/)
 
-        <h3>JavaScript</h3>
-        <pre>Object.assign(window, window['@servicestack/client']) //import
+### Using JsonServiceClient in Web Pages
 
-var client = new JsonServiceClient()
-client.get(new Hello({ name: name }))
-    .then(function(r) {
-        console.log(r.result)
-    })
-</pre>
+Easiest way to call APIs is to use [@servicestack/client](https://docs.servicestack.net/javascript-client) with
+the built-in [/types/mjs](/types/mjs) which returns your APIs in annotated typed ES6 class DTOs where it can be 
+referenced directly from a [JavaScript Module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 
-    <h3>TypeScript</h3>
-    <pre>$ npm install @servicestack/client</pre>
-    <pre>import { JsonServiceClient } from '@servicestack/client'
+We recommend using an [importmap](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) 
+to specify where to load **@servicestack/client** from, e.g:
 
-let client = new JsonServiceClient()
-let response = await client.get(new Hello({ name }))
-</pre>
+```html
+&lt;script type="importmap"&gt;
+{
+  "imports": {
+    "@servicestack/client":"https://unpkg.com/@servicestack/client@2/dist/servicestack-client.mjs"
+  }
+}
+&lt;/script&gt;
+```
 
-        <p>
-            Generate Typed DTOs using 
-            <a href="https://docs.servicestack.net/typescript-add-servicestack-reference">Add ServiceStack Reference</a> 
-        </p>
-    </div>
-            
-    <script src="/js/servicestack-client.js"></script>
-    <script>
-        Object.assign(window, window['@servicestack/client']); //import into global namespace
+This lets us reference the **@servicestack/client** package name in our source code instead of its physical location:
+    
+```html
+&lt;input type="text" id="txtName"&gt;
+&lt;div id="result"&gt;&lt;/div&gt;
+```
 
-        // generate typed dtos with https://docs.servicestack.net/typescript-add-servicestack-reference
-        var Hello = /** @class */ (function () {
-            function Hello(init) { Object.assign(this, init); }
-            Hello.prototype.createResponse = function () { return new HelloResponse(); };
-            Hello.prototype.getTypeName = function () { return 'Hello'; };
-            return Hello;
-        }());
-        var HelloResponse = /** @class */ (function () {
-            function HelloResponse(init) { Object.assign(this, init); }
-            return HelloResponse;
-        }());
+```html
+&lt;script type="module"&gt;
+import { JsonApiClient, $1, on } from '@servicestack/client'
+import { Hello } from '/types/mjs'
 
-        var client = new JsonServiceClient();
-        function callHello(val) {
-            client.get(new Hello({ name: val }))
-                .then(function(r) {
-                    document.getElementById('result').innerHTML = r.result;
-                });
-        }
-    </script>
+const client = JsonApiClient.create()
+on('#txtName', {
+    async keyup(el) {
+        const api = await client.api(new Hello({ name:el.target.value }))
+        $1('#result').innerHTML = api.response.result
+    }
+})
+&lt;/script&gt;
+```
+
+### Enable static analysis and intelli-sense 
+
+For better IDE intelli-sense during development, save the annotated Typed DTOs to disk with the [x dotnet tool](https://docs.servicestack.net/dotnet-tool):
+
+```bash
+$ x mjs
+```
+
+Then reference it instead to enable IDE static analysis when calling Typed APIs from JavaScript:
+
+```js
+import { Hello } from '/js/dtos.mjs'
+client.api(new Hello({ name }))
+```
+    
+To also enable static analysis for **@servicestack/client**, install the dependency-free library as a dev dependency:
+    
+```bash
+$ npm install -D @servicestack/client
+```
+
+Where only its TypeScript definitions are used by the IDE during development to enable its type-checking and intelli-sense.
+</template>
+
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+function decode(html) {
+    const txt = document.createElement("textarea")
+    txt.innerHTML = html
+    return txt.value
+}
+document.querySelector('#content').innerHTML = marked.parse(decode(document.querySelector('#docs').innerHTML))
+hljs.highlightAll()
+</script>
+
+</div>
 
 </body>
 </html>

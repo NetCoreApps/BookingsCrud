@@ -1,42 +1,50 @@
 # BookingsCrud
 
-Leverage [AutoQuery CRUD](https://docs.servicestack.net/autoquery-crud), ServiceStack [Studio](https://docs.servicestack.net/studio) with User Admin module to create a multi-user ASP.NET Core Booking System from scratch within minutes with full Audit History, fine-grained permissions, declarative validation, run
-adhoc queries & export to Excel by just defining code-first high-performance AutoQuery CRUD Typed APIs - ServiceStack does the rest!
+Leverage [AutoQuery CRUD](https://docs.servicestack.net/autoquery-crud) and [Locode](https://docs.servicestack.net/locode/) with [User Admin UI](https://docs.servicestack.net/admin-ui-users) to create a multi-user ASP.NET Core Booking System from scratch within minutes with full Audit History, fine-grained permissions, declarative validation, run adhoc queries & export to Excel by just defining code-first high-performance AutoQuery CRUD Typed APIs - ServiceStack does the rest!
 
-> YouTube: [youtu.be/XpHAaCTV7jE](https://youtu.be/XpHAaCTV7jE)
+> YouTube: [youtu.be/rSFiikDjGos](https://youtu.be/rSFiikDjGos)
 
-[![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/studio/bookings-crud-screenshot.png)](https://youtu.be/XpHAaCTV7jE)
+[![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/studio/bookings-crud-screenshot.png)](https://youtu.be/rSFiikDjGos)
 
 ## Download & Run
 
 The quickest way to run this Booking CRUD Example is to download & run it:
 
-    $ app download NetCoreApps/BookingsCrud -out BookingsCrud
-    $ cd BookingsCrud\Acme
-    $ dotnet run
+```bash
+x download NetCoreApps/BookingsCrud
+cd BookingsCrud\Acme
+dotnet run
+```
 
 ## Creating new Empty Web Project
 
 Install [app dotnet tool](https://docs.servicestack.net/netcore-windows-desktop) and create empty [web](https://github.com/NetCoreApps/BookingsCrud) project:
 
-    $ dotnet tool install -g app
-
-    $ app new web Acme
+```bash
+$ dotnet tool install -g x
+$ x new web Acme
+```
 
 ## Mix in desired features
 
 You can then easily [layer on additional functionality](https://docs.servicestack.net/mix-tool) to integrate with your preferred technology of your Environment's infrastructure, e.g. In order for this project to be self-hosting it utilizes the embedded SQLite database, which we can configure along with configuration to enable popular Authentication providers and an RDBMS SQLite Auth Repository with:
 
-    $ app mix auth auth-db sqlite
+```bash
+$ x mix auth auth-db sqlite
+```
 
 But if you wanted to enable [Sign in with Apple](https://docs.servicestack.net/signin-with-apple) and use SQL Server you'll instead run:
 
-    $ app mix auth-ext auth-db sqlserver
+```bash
+$ x mix auth-ext auth-db sqlserver
+```
 
 You can view all DB and Auth options available by searching for available mix gists by tag:
 
-    $ app mix #db
-    $ app mix #auth
+```bash
+$ x mix #db
+$ x mix #auth
+```
 
 ### Configure Database
 
@@ -149,22 +157,10 @@ public class DeleteBooking : IDeleteDb<Booking>, IReturnVoid
 }
 ```
 
-A Service can have both an `IUpdateDb<T>` API to define a **full update** where every field is updated
-as well as an `IPatchDb<T>` API that only updates non nullable properties.
-
-ServiceStack Studio edit Record UI will use the `IUpdateDb<T>` if it exists, otherwise uses the `IPatchDb<T>` API
-and only updates changed fields.
-
-> Note: The `reset` request param, e.g. `?reset=Field1,Field2` can set multiple fields to `NULL` in `IPatchDb<T>` APIs
-
 ### Run in ServiceStack Studio
 
-With your AutoQuery APIs created, you can run your App and use [ServiceStack Studio](https://docs.servicestack.net/studio) UI to manage Bookings and Users.
+After defining your AutoQuery APIs, start your App then you can use the built-in Locode UI to manage Bookings at:
 
-Install the [app dotnet tool](/netcore-windows-desktop) then launch with:
+### [https://localhost:5001/locode/](https://localhost:5001/locode/)
 
-### [app://studio](app://studio)
-
-> YouTube: [youtu.be/2FFRLxs7orU](https://youtu.be/2FFRLxs7orU)
-
-[![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/release-notes/v5.9/studio-home.png)](https://youtu.be/2FFRLxs7orU)
+![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/locode/bookings-locode.png)
