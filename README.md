@@ -4,7 +4,7 @@ Leverage [AutoQuery CRUD](https://docs.servicestack.net/autoquery-crud) and [Loc
 
 > YouTube: [youtu.be/rSFiikDjGos](https://youtu.be/rSFiikDjGos)
 
-[![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/studio/bookings-crud-screenshot.png)](https://youtu.be/rSFiikDjGos)
+[![Build a Bookings API with a user friendly Admin UI in minutes!](https://img.youtube.com/vi/rSFiikDjGos/0.jpg)](https://www.youtube.com/watch?v=rSFiikDjGos)
 
 ## Download & Run
 
